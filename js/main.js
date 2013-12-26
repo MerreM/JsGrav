@@ -3,9 +3,7 @@ MAX_X = 800;
 GRAVITY = 0.2;
 EDGE_THRES = 5;
 FRICTION = 0.8;
-RED = 0x010000;
-GREEN = 0x000100;
-BLUE = 0x000001;
+POLY_COUNT = 30;
 
 function RGB2Color(r,g,b){
     return '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
@@ -25,25 +23,28 @@ function changeColour(i){
 }
 
 function dObject(){
-    this.x_pos = (Math.random()*MAX_X);
-    this.y_pos = (Math.random()*MAX_Y);
-    this.x_speed=(Math.random()*10)-5;
-    this.y_speed=(Math.random()*10)-5;
-    this.alive = false;
-    this.count = Math.random()*100;
-    this.colour = 0x000000;
-    this.x_edge = 0;
-    this.y_edge = 0;
-    this.gravity = true;
-    this.friction = false;
-    this.width = 10;
-    this.height = 10;
-    this.size = 1;
+    this.init = function(){
+        this.x_pos = (Math.random()*MAX_X);
+        this.y_pos = (Math.random()*MAX_Y);
+        this.x_speed=(Math.random()*10)-5;
+        this.y_speed=(Math.random()*10)-5;
+        this.alive = false;
+        this.count = Math.random()*100;
+        this.colour = 0x000000;
+        this.x_edge = 0;
+        this.y_edge = 0;
+        this.gravity = true;
+        this.friction = false;
+        this.width = 10;
+        this.height = 10;
+        this.size = (Math.random()+0.5);
+    }
+    this.init();
     this.get_height = function(){
-        return this.height*this.size();
+        return this.height*this.size;
     }
     this.get_width = function(){
-        return this.width*this.size();
+        return this.width*this.size;
     }
     this.draw = function(context){
         this.colour=changeColour(this.count);
@@ -62,10 +63,13 @@ function dObject(){
         this.y_speed+=y_accel;
         this.x_pos+=this.x_speed;
         this.y_pos+=this.y_speed;
+        if(Math.abs(this.x_speed) < 0.1){
+            this.x_speed = 0;
+        }
         if (this.x_pos+this.get_width()+this.x_speed >= MAX_X || this.x_pos+this.x_speed <= 0){
             this.x_speed=-this.x_speed;
             this.x_edge+=1;
-            if(this.x_edge>EDGE_THRES || Math.abs(this.x_speed) < 0.01){
+            if(this.x_edge>EDGE_THRES){
                 this.x_speed=0;
             }
         } else {
@@ -84,15 +88,17 @@ function dObject(){
             this.gravity = true;
             this.y_edge = 0;
         }
+        if (this.x_speed == 0 && this.y_speed == 0){
+            this.kill_object();
+        }
     }
     this.kill_object = function(){
-        this.alive = true;
-        return true;
+        this.init();
     }
 }
 function prepareObjects(){
     var cloud = new Array();
-    for(var i=0;i<10;i++){
+    for(var i=0;i<POLY_COUNT;i++){
         cloud.push(new dObject());
     }
     return cloud;
@@ -129,7 +135,8 @@ $(document).ready(function(){
         update(cloud);
 
         // clear
-        context.clearRect(0,0,MAX_X,MAX_Y);
+        context.fillStyle = "rgba(0, 0, 0, 0.005)"
+        context.fillRect(0,0,MAX_X,MAX_Y);
 
         // draw stuff
         draw(cloud,context)
