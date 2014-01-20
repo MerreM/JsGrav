@@ -3,7 +3,8 @@ MAX_X = 800;
 GRAVITY = 0.2;
 EDGE_THRES = 5;
 FRICTION = 0.8;
-POLY_COUNT = 30;
+POLY_COUNT = 50;
+ALPHA = 1;
 
 function RGB2Color(r,g,b){
     return '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
@@ -135,7 +136,7 @@ $(document).ready(function(){
         update(cloud);
 
         // clear
-        context.fillStyle = "rgba(0, 0, 0, 0.005)"
+        context.fillStyle = "rgba(0, 0, 0, "+ALPHA+")"
         context.fillRect(0,0,MAX_X,MAX_Y);
 
         // draw stuff
