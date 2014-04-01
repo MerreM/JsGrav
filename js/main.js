@@ -3,7 +3,7 @@ MAX_X = 800;
 GRAVITY = 0.2;
 EDGE_THRES = 5;
 FRICTION = 0.8;
-POLY_COUNT = 50;
+POLY_COUNT = 500;
 ALPHA = 1;
 
 function RGB2Color(r,g,b){
@@ -112,7 +112,7 @@ $(document).ready(function(){
     window.requestAnimFrame = (function(callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
         function(callback) {
-            window.setTimeout(callback, 1000 / 60);
+            window.setTimeout(callback, 1000 / 30);
         };
     })();
 
@@ -136,7 +136,7 @@ $(document).ready(function(){
         update(cloud);
 
         // clear
-        context.fillStyle = "rgba(0, 0, 0, "+ALPHA+")"
+        context.fillStyle = "rgba(255,255,255,"+ALPHA+")"
         context.fillRect(0,0,MAX_X,MAX_Y);
 
         // draw stuff
