@@ -5,9 +5,12 @@ EDGE_THRES = 5;
 FRICTION = 0.8;
 POLY_COUNT = 100;
 ALPHA = 1;
+FACES = true;
+
 var imageObj = new Image();
 
 imageObj.src = "/img/favicon.png";
+
 function RGB2Color(r,g,b){
     return '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
 }
@@ -52,9 +55,12 @@ function dObject(){
     this.draw = function(context){
         this.colour=changeColour(this.count);
         this.count++;
-        // context.fillStyle=this.colour;
-        context.drawImage(imageObj,this.x_pos,this.y_pos,this.get_width(),this.get_height())
-        // context.fillRect(this.x_pos,this.y_pos,this.get_width(),this.get_height())
+        if(FACES){
+            context.fillStyle=this.colour;
+            context.fillRect(this.x_pos,this.y_pos,this.get_width(),this.get_height())
+        } else {
+            context.drawImage(imageObj,this.x_pos,this.y_pos,this.get_width(),this.get_height())
+        }
     }
     this.update = function(x_accel, y_accel){
         if(this.friction){
