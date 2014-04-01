@@ -1,10 +1,10 @@
 MAX_Y = 750;
 MAX_X = 1600;
-GRAVITY = 0.2;
+GRAVITY = 0.01;
 EDGE_THRES = 5;
 FRICTION = 0.8;
 POLY_COUNT = 100;
-ALPHA = 0.5;
+ALPHA = 1;
 var imageObj = new Image();
 
 imageObj.src = "/img/favicon.png";
