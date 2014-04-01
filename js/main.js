@@ -4,7 +4,7 @@ GRAVITY = 0.01;
 EDGE_THRES = 5;
 FRICTION = 0.8;
 POLY_COUNT = 100;
-ALPHA = 1;
+ALPHA = 0.3;
 FACES = true;
 
 var imageObj = new Image();
